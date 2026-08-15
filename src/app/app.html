@@ -1,0 +1,585 @@
+<!-- NAVBAR -->
+
+<header class="navbar">
+
+  <div class="brand">
+
+    <div class="brand-icon">🍽️</div>
+
+    <div>
+      <h2>Sushma</h2>
+      <small>HOTEL & RESTAURANT</small>
+    </div>
+
+  </div>
+
+
+  <nav>
+
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#menu">Menu</a>
+    <a href="#contact">Contact</a>
+
+  </nav>
+
+
+  <button
+    class="cart-button"
+    (click)="showCart = true">
+
+    🛒 Cart
+
+    <span *ngIf="cartCount > 0">
+      {{ cartCount }}
+    </span>
+
+  </button>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+
+    <p class="welcome">
+      WELCOME TO SUSHMA HOTEL & RESTAURANT
+    </p>
+
+    <h1>
+      Authentic Flavours.
+      <span>Beautiful Memories.</span>
+    </h1>
+
+    <p class="hero-description">
+
+      Experience delicious Indian cuisine prepared with
+      fresh ingredients, traditional recipes and a whole
+      lot of love.
+
+    </p>
+
+
+    <div class="hero-actions">
+
+      <a href="#menu" class="primary-button">
+        Explore Our Menu
+      </a>
+
+      <a href="#about" class="outline-button">
+        Our Story
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- FEATURES -->
+
+<section class="features">
+
+  <div class="feature">
+    <span>🍛</span>
+    <h3>Authentic Food</h3>
+    <p>Traditional recipes and rich flavours.</p>
+  </div>
+
+  <div class="feature">
+    <span>🥬</span>
+    <h3>Fresh Ingredients</h3>
+    <p>Fresh ingredients prepared every day.</p>
+  </div>
+
+  <div class="feature">
+    <span>👨‍🍳</span>
+    <h3>Expert Chefs</h3>
+    <p>Food prepared by passionate chefs.</p>
+  </div>
+
+  <div class="feature">
+    <span>❤️</span>
+    <h3>Made With Love</h3>
+    <p>Every plate is made with care.</p>
+  </div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section class="about-section" id="about">
+
+  <div class="about-image">
+
+    <img
+      src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1000&q=80"
+      alt="Restaurant">
+
+  </div>
+
+
+  <div class="about-content">
+
+    <p class="section-label">
+      ABOUT SUSHMA
+    </p>
+
+    <h2>
+      Where Every Meal Becomes A Memory
+    </h2>
+
+    <p>
+      Sushma Hotel & Restaurant brings together the
+      warmth of traditional Indian hospitality and the
+      flavours of freshly prepared food.
+    </p>
+
+    <p>
+      From quick breakfasts to family dinners and
+      celebrations, we create food that brings people
+      together.
+    </p>
+
+    <a href="#menu" class="primary-button">
+      Discover Our Menu
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- MENU -->
+
+<section class="menu-section" id="menu">
+
+  <div class="section-heading">
+
+    <p class="section-label">
+      OUR MENU
+    </p>
+
+    <h2>
+      Something Delicious For Everyone
+    </h2>
+
+    <p>
+      Choose your favourite category and explore our
+      freshly prepared dishes.
+    </p>
+
+  </div>
+
+
+  <!-- CATEGORY FILTER -->
+
+  <div class="categories">
+
+    <button
+      *ngFor="let category of categories"
+      [class.active]="selectedCategory === category"
+      (click)="selectCategory(category)">
+
+      {{ category }}
+
+    </button>
+
+  </div>
+
+
+  <!-- FOOD GRID -->
+
+  <div class="food-grid">
+
+    <article
+      class="food-card"
+      *ngFor="let food of filteredFood">
+
+
+      <div class="food-image">
+
+        <img
+          [src]="food.image"
+          [alt]="food.name">
+
+        <span class="category-badge">
+          {{ food.category }}
+        </span>
+
+      </div>
+
+
+      <div class="food-details">
+
+        <div class="food-heading">
+
+          <h3>
+            {{ food.name }}
+          </h3>
+
+          <strong>
+            ₹{{ food.price }}
+          </strong>
+
+        </div>
+
+
+        <p>
+          {{ food.description }}
+        </p>
+
+
+        <button
+          class="add-cart"
+          (click)="addToCart(food)">
+
+          + Add To Cart
+
+        </button>
+
+      </div>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- CART -->
+
+<div
+  class="cart-overlay"
+  *ngIf="showCart"
+  (click)="showCart = false">
+
+</div>
+
+
+<aside
+  class="cart-panel"
+  [class.open]="showCart">
+
+  <div class="cart-header">
+
+    <h2>Your Cart</h2>
+
+    <button
+      (click)="showCart = false">
+
+      ✕
+
+    </button>
+
+  </div>
+
+
+  <div
+    class="empty-cart"
+    *ngIf="cart.length === 0">
+
+    <span>🛒</span>
+
+    <h3>Your cart is empty</h3>
+
+    <p>Add some delicious food!</p>
+
+  </div>
+
+
+  <div
+    class="cart-items"
+    *ngIf="cart.length > 0">
+
+    <div
+      class="cart-item"
+      *ngFor="let item of cart">
+
+      <img
+        [src]="item.image"
+        [alt]="item.name">
+
+
+      <div class="cart-item-info">
+
+        <h4>{{ item.name }}</h4>
+
+        <p>₹{{ item.price }}</p>
+
+
+        <div class="quantity">
+
+          <button
+            (click)="decreaseQuantity(item)">
+
+            −
+
+          </button>
+
+          <span>
+            {{ item.quantity }}
+          </span>
+
+          <button
+            (click)="increaseQuantity(item)">
+
+            +
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="remove"
+        (click)="removeFromCart(item)">
+
+        🗑️
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="cart-footer"
+    *ngIf="cart.length > 0">
+
+    <div class="total">
+
+      <span>Total</span>
+
+      <strong>
+        ₹{{ cartTotal }}
+      </strong>
+
+    </div>
+
+
+    <button
+      class="checkout-button"
+      (click)="openCheckout()">
+
+      Proceed To Checkout
+
+    </button>
+
+  </div>
+
+</aside>
+
+
+<!-- CHECKOUT -->
+
+<div
+  class="modal-background"
+  *ngIf="showCheckout">
+
+  <div class="checkout-modal">
+
+    <button
+      class="close-modal"
+      (click)="showCheckout = false">
+
+      ✕
+
+    </button>
+
+
+    <h2>
+      Complete Your Order
+    </h2>
+
+    <p class="modal-subtitle">
+      Enter your details and we'll prepare your order.
+    </p>
+
+
+    <div class="order-summary">
+
+      <div
+        *ngFor="let item of cart">
+
+        <span>
+          {{ item.name }} × {{ item.quantity }}
+        </span>
+
+        <strong>
+          ₹{{ item.price * item.quantity }}
+        </strong>
+
+      </div>
+
+
+      <hr>
+
+
+      <div class="grand-total">
+
+        <span>Total</span>
+
+        <strong>
+          ₹{{ cartTotal }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>Your Name</label>
+
+      <input
+        type="text"
+        [(ngModel)]="customerName"
+        placeholder="Enter your name">
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>Phone Number</label>
+
+      <input
+        type="tel"
+        [(ngModel)]="customerPhone"
+        placeholder="Enter phone number">
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>Delivery Address</label>
+
+      <textarea
+        [(ngModel)]="customerAddress"
+        placeholder="Enter address">
+
+      </textarea>
+
+    </div>
+
+
+    <button
+      class="place-order"
+      (click)="placeOrder()">
+
+      Place Order • ₹{{ cartTotal }}
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- ORDER SUCCESS -->
+
+<div
+  class="modal-background"
+  *ngIf="orderPlaced">
+
+  <div class="success-modal">
+
+    <div class="success-icon">
+      ✓
+    </div>
+
+    <h2>
+      Order Placed!
+    </h2>
+
+    <p>
+      Thank you, {{ customerName }}!
+    </p>
+
+    <p>
+      Your order has been received by
+      Sushma Hotel & Restaurant.
+    </p>
+
+    <button
+      class="primary-button"
+      (click)="closeOrderSuccess()">
+
+      Continue Browsing
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- CONTACT -->
+
+<section class="contact-section" id="contact">
+
+  <div>
+
+    <p class="section-label">
+      VISIT US
+    </p>
+
+    <h2>
+      We'd Love To Serve You
+    </h2>
+
+    <p>
+      📍 123 MG Road, Bengaluru
+    </p>
+
+    <p>
+      📞 +91 98765 43210
+    </p>
+
+    <p>
+      ✉️ hello@sushmarestaurant.com
+    </p>
+
+  </div>
+
+
+  <div class="contact-card">
+
+    <h3>Opening Hours</h3>
+
+    <p>Monday – Friday</p>
+    <strong>11:00 AM – 11:00 PM</strong>
+
+    <p>Saturday – Sunday</p>
+    <strong>10:00 AM – 11:30 PM</strong>
+
+  </div>
+
+</section>
+
+
+<footer>
+
+  <div class="brand-footer">
+    🍽️ Sushma Hotel & Restaurant
+  </div>
+
+  <p>
+    © 2026 Sushma Hotel & Restaurant.
+    All rights reserved.
+  </p>
+
+</footer>
